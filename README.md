@@ -1,19 +1,14 @@
-# Real-time Chat App
-Built on MERN stack with GraphQL.
+# Calender with Todo List
+Built on MERN stack with GraphQL, based off code_realm
 
 ## Features
 ### MVP 
-- Sign up/ Sign in/ Reset Password
-- Direct messaging (1 on 1)
-- Group chat (2+ users)
-- File sharing (img, text, etc.)
+- Todo list connected to each day within calendar
 - Responsive material design
 
 ### Extra Features
 - Notifications
 - Themes and customisation
-- Status indicators (typing, offline)
-- Emails (confirmation, forgot password)
 - Other
 
 ### Topics:
@@ -40,3 +35,5 @@ Built on MERN stack with GraphQL.
 - Apollo Client
 - Material-UI
 - Bootstrap + Reactstrap
+
+## RoadMap
