@@ -6,15 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node -r esm",
-    "dev": "NODE_ENV=development nodemon -r esm"
+    "dev": "NODE_ENV=development nodemon -r esm",
+    "client": "npm start --prefix client",
+    "conc": "concurrently \"npm run dev\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^2.4.8",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
     "esm": "^3.2.22",
     "express": "^4.16.4",
     "graphql": "^14.2.1",
-    "nodemon": "^1.18.10"
+    "mongoose": "^5.4.22"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
