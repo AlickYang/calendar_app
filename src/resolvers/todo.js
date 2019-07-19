@@ -3,14 +3,32 @@ import mongoose from "mongoose";
 
 export default {
   Query: {
-    todos: (root, args, context, info) => {
-      return Todo.find({});
+    todos: async (root, args, context, info) => {
+      try {
+        const todos = await Todo.find();
+        if (todos) {
+          return todos;
+        } else {
+          throw new Error("Todo not found");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
     },
-    todo: (root, { id }, context, info) => {
+    todo: async (root, { id }, context, info) => {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new Error();
       }
-      return Todo.findById(id);
+      try {
+        const todo = await Todo.findById(id);
+        if (todo) {
+          return todo;
+        } else {
+          throw new Error("Todo not found");
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
     }
   },
 
@@ -41,20 +59,27 @@ export default {
       return subTodo;
     },
 
-    updateTodo: async (root, args, context, info) => {
+    updateTodoTask: async (root, args, context, info) => {
       const { id, newTask } = args;
       const find = await Todo.findByIdAndUpdate({ _id: id }, { task: newTask });
       return find;
     },
 
-    toggleHidden: async (root, args, context, info) => {
+    toggleTodoHidden: async (root, args, context, info) => {
       //TODO
       // const { id, newTask } = args;
       // const find = await Todo.findByIdAndUpdate({ _id: id }, { task: newTask });
     },
 
-    toggleComplete: async (root, args, context, info) => {
+    toggleTodoComplete: async (root, args, context, info) => {
       //TODO
+      const { id, isComplete } = args;
+      const toggle = !isComplete;
+      const find = await Todo.findByIdAndUpdate(
+        { _id: id },
+        { isComplete: toggle }
+      );
+      return find;
     }
   },
 

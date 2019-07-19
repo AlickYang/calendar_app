@@ -10,8 +10,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   cors: false,
-  playground: !IN_PROD,
-  path: "/graphql"
+  playground: true
 });
 
 mongoose
