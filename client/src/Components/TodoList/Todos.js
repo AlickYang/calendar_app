@@ -1,18 +1,14 @@
 import React, { Fragment } from "react";
 //GraphQL
-import { Query } from "react-apollo";
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
 import TodoItem from "./TodoItem";
 import Loading from "./../Common/Loading";
 
-/* Material UI */
-//List related
-import List from "@material-ui/core/List";
-
-const GET_TODOS = gql`
+const GET_TODOS_QUERY = gql`
   query {
-    todos {
+    getTodos {
       id
       task
       isComplete
@@ -26,28 +22,26 @@ const GET_TODOS = gql`
 
 export default function Todos() {
   // const classes = TodoListTheme;
+  const {
+    loading,
+    data: { getTodos: todos }
+  } = useQuery(GET_TODOS_QUERY);
   return (
-    <List>
-      <Query query={GET_TODOS}>
-        {({ loading, error, data }) => {
-          if (loading) {
-            return <Loading />;
-          }
-          if (error) return `Error! ${error.message}`;
-          return (
-            <Fragment>
-              {data.todos.map(todo => (
-                <TodoItem
-                  todo={todo.task}
-                  key={todo.id}
-                  subTodos={todo.subTodos}
-                  isComplete={todo.isComplete}
-                />
-              ))}
-            </Fragment>
-          );
-        }}
-      </Query>
-    </List>
+    <Fragment>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          {todos.map(todo => (
+            <TodoItem
+              key={todo.id}
+              todo={todo.task}
+              subTodos={todo.subTodos}
+              isComplete={todo.isComplete}
+            />
+          ))}
+        </Fragment>
+      )}
+    </Fragment>
   );
 }

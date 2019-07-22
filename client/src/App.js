@@ -1,7 +1,4 @@
-import React, { Component } from "react";
-import { ApolloProvider } from "react-apollo";
-import ApolloClient from "apollo-boost";
-
+import React from "react";
 //Components
 import TodoListContainer from "./Components/TodoList/TodoListContainer";
 
@@ -12,22 +9,13 @@ import { Header, Background } from "./Components/Layouts";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./Style/theme";
 
-//Run apollo client
-const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql"
-});
-
-class App extends Component {
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
-          <Header />
-          <TodoListContainer />
-        </ThemeProvider>
-      </ApolloProvider>
-    );
-  }
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <Header />
+      <TodoListContainer />
+    </ThemeProvider>
+  );
 }
 
 export default App;

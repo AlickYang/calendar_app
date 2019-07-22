@@ -1,11 +1,19 @@
 import { Todo, SubTodo } from "../models/";
 import mongoose from "mongoose";
+import { UserInputError } from "apollo-server-express";
 
 export default {
+  Todo: {
+    subTodos: async (todo, args, context, info) => {
+      const ret = (await todo.populate("subTodos").execPopulate()).subTodos;
+      console.log(ret);
+      return ret;
+    }
+  },
   Query: {
-    todos: async (root, args, context, info) => {
+    getTodos: async (root, args, context, info) => {
       try {
-        const todos = await Todo.find();
+        const todos = await Todo.find().sort({ createdAt: -1 });
         if (todos) {
           return todos;
         } else {
@@ -15,7 +23,7 @@ export default {
         throw new Error(err);
       }
     },
-    todo: async (root, { id }, context, info) => {
+    getTodo: async (root, { id }, context, info) => {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new Error();
       }
@@ -33,25 +41,37 @@ export default {
   },
 
   Mutation: {
-    addTodo: (root, args, context, info) => {
-      return Todo.create(args);
+    addTodo: async (root, args, context, info) => {
+      const todo = await Todo.create(args);
+      return todo;
     },
-    removeTodo: (root, { id }, context, info) => {
-      const removeResult = Todo.findByIdAndDelete(id).exec();
-      if (!removeResult) {
-        throw new Error("Id does not exist in db");
+    removeTodo: async (root, { id }, context, info) => {
+      try {
+        const removeResult = await Todo.findByIdAndDelete(id);
+        if (!removeResult) {
+          throw new Error(
+            "Todo does not exist (trying to remove invalid todo)"
+          );
+        }
+        return "Todo successfully deleted";
+      } catch (err) {
+        throw new Error(err);
       }
-      return removeResult;
     },
 
-    addSubTodo: async (root, args, context, info) => {
-      const { id, task } = args;
-      const subTodo = await SubTodo.create({ task });
+    addSubTodo: async (root, { id, task }, context, info) => {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         throw new Error();
       }
+      if (task.trim() === "") {
+        throw UserInputError("Empty task", {
+          errors: {
+            body: "Todo body must not be empty"
+          }
+        });
+      }
+      const subTodo = await SubTodo.create({ task });
       const todoUpdate = Todo.findById(id);
-      console.log("id is " + id);
       await todoUpdate
         .findOneAndUpdate({ _id: id }, { $push: { subTodos: subTodo } })
         .then(res => console.log(res))
@@ -59,35 +79,38 @@ export default {
       return subTodo;
     },
 
-    updateTodoTask: async (root, args, context, info) => {
-      const { id, newTask } = args;
-      const find = await Todo.findByIdAndUpdate({ _id: id }, { task: newTask });
-      return find;
-    },
-
-    toggleTodoHidden: async (root, args, context, info) => {
-      //TODO
-      // const { id, newTask } = args;
+    updateTodoTask: async (root, { id, newTask }, context, info) => {
       // const find = await Todo.findByIdAndUpdate({ _id: id }, { task: newTask });
+      const todo = await Todo.findById(id);
+      if (todo) {
+        todo.task = newTask;
+        await todo.save();
+        return todo;
+      } else {
+        throw new Error("Todo not found");
+      }
     },
 
-    toggleTodoComplete: async (root, args, context, info) => {
-      //TODO
-      const { id, isComplete } = args;
-      const toggle = !isComplete;
-      const find = await Todo.findByIdAndUpdate(
-        { _id: id },
-        { isComplete: toggle }
-      );
-      return find;
-    }
-  },
+    toggleTodoHidden: async (root, { id }, context, info) => {
+      const todo = await Todo.findById(id);
+      if (todo) {
+        todo.hidden = !todo.hidden;
+        await todo.save();
+        return todo;
+      } else {
+        throw new Error("Todo not found");
+      }
+    },
 
-  Todo: {
-    subTodos: async (todo, args, context, info) => {
-      const ret = (await todo.populate("subTodos").execPopulate()).subTodos;
-      console.log(ret);
-      return ret;
+    toggleTodoComplete: async (root, { id }, context, info) => {
+      const todo = await Todo.findById(id);
+      if (todo) {
+        todo.isComplete = !todo.isComplete;
+        await todo.save();
+        return todo;
+      } else {
+        throw new Error("Todo not found");
+      }
     }
   }
 };

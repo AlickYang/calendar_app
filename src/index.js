@@ -3,7 +3,7 @@ import typeDefs from "./typeDefs";
 import express from "express";
 import mongoose from "mongoose";
 import resolvers from "./resolvers";
-import { APP_PORT, IN_PROD, MONGO_URI } from "./config/keys";
+import { APP_PORT, IN_PROD, MONGO_URI, NODE_ENV } from "./config/keys";
 import cors from "cors";
 
 const server = new ApolloServer({

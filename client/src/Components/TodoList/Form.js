@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 export default function Form() {
   const classes = useStyles();
   return (
-    <FormControl fullwidth className={classes.marginForInput}>
+    <FormControl fullwidth="true" className={classes.marginForInput}>
       <TextField
         id="standard-full-width"
         margin="normal"
