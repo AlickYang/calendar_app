@@ -5,19 +5,15 @@ import gql from "graphql-tag";
 
 import TodoItem from "./TodoItem";
 import Loading from "./../Common/Loading";
-import {
-  GET_TODOS_QUERY,
-  GET_SUBTODOS_QUERY,
-  GET_TODO_QUERY
-} from "./Todo-gql/Queries";
+import { QUERY_GET_TODOS } from "./Todo-gql/Queries";
 
 export default function Todos() {
   // const classes = TodoListTheme;
   const {
     loading,
     data: { getTodos: todos }
-  } = useQuery(GET_TODOS_QUERY);
-
+  } = useQuery(QUERY_GET_TODOS);
+  console.log(todos);
   return (
     <Fragment>
       {loading ? (
@@ -27,6 +23,7 @@ export default function Todos() {
           {todos.map(todo => (
             <TodoItem
               key={todo.id}
+              id={todo.id}
               todo={todo.task}
               subTodos={todo.subTodos}
               isComplete={todo.isComplete}

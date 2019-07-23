@@ -3,6 +3,8 @@ import moment from "moment";
 /* Material UI */
 import { makeStyles } from "@material-ui/core/styles";
 import TodoItemTheme from "./TodoTheme";
+import { MUTATION_REMOVE_TODO } from "./Todo-gql/Mutations";
+import { useMutation } from "@apollo/react-hooks";
 //List related
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -35,14 +37,31 @@ export default function TodoItem({
   createdAt
 }) {
   const [open, setOpen] = useState(false);
+  const todoId = id;
 
   function handleClick() {
     setOpen(!open);
   }
 
-  const classes = useStyles();
+  const [removeTodo, { loading }] = useMutation(MUTATION_REMOVE_TODO, {
+    update(_, result) {
+      console.log(result);
+      console.log("Removing todo");
+    },
+    onError(err) {
+      console.log(err);
+      console.log(err.graphQLErrors);
+    },
+    variables: { id: todoId }
+  });
 
-  const time = moment(createdAt).fromNow(true);
+  const onDeleteClick = event => {
+    event.preventDefault();
+    removeTodo();
+  };
+
+  const classes = useStyles();
+  const time = moment(createdAt).format("l");
 
   return (
     <List style={style}>
@@ -52,7 +71,7 @@ export default function TodoItem({
         </ListItemIcon>
         <ListItemText primary={todo} secondary={time} />
         <ListItemSecondaryAction>
-          <IconButton>
+          <IconButton onClick={onDeleteClick}>
             <DeleteRounded />
           </IconButton>
         </ListItemSecondaryAction>

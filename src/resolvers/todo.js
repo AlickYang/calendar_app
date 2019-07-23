@@ -41,28 +41,34 @@ export default {
 
   Mutation: {
     addTodo: async (root, { task }, context, info) => {
-      const todo = new Todo({
+      if (task.trim === "") {
+        throw new Error("Body must not be empty");
+      }
+      const newTodo = new Todo({
         task,
+        isComplete: false,
         createdAt: new Date().toISOString()
       });
+      console.log("Trying to make a new todo");
+      console.log(newTodo);
+      const todo = await newTodo.save();
       console.log(todo);
-      const resultOfSave = await todo.save();
-      if (resultOfSave) {
-        return todo;
-      } else {
-        throw new Error("Could not be saved");
-      }
+      return todo;
     },
+
     removeTodo: async (root, { id }, context, info) => {
+      console.log("In removeTodo");
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid todo id");
+      }
       try {
-        const removeResult = await Todo.findByIdAndDelete(id);
-        if (!removeResult) {
-          throw new Error(
-            "Todo does not exist (trying to remove invalid todo)"
-          );
-        }
+        console.log("Trying to find the todo");
+        const todo = await Todo.findById(id);
+        await todo.delete();
+        console.log("Removal successful");
         return "Todo successfully deleted";
       } catch (err) {
+        console.log("It just failed");
         throw new Error(err);
       }
     },

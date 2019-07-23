@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const GET_TODOS_QUERY = gql`
+export const QUERY_GET_TODOS = gql`
   query {
     getTodos {
       id
@@ -17,7 +17,7 @@ export const GET_TODOS_QUERY = gql`
   }
 `;
 
-export const GET_TODO_QUERY = gql`
+export const QUERY_GET_TODO = gql`
   query getTodo($id: String) {
     getTodo(id: $id) {
       task
@@ -27,7 +27,7 @@ export const GET_TODO_QUERY = gql`
   }
 `;
 
-export const GET_SUBTODOS_QUERY = gql`
+export const QUERY_GET_SUBTODOS = gql`
   query {
     getSubTodos {
       id

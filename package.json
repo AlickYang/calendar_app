@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "NODE_ENV=production nodemon -r esm index.js",
+    "server": "NODE_ENV=production node -r esm index.js",
     "dev": "node -r esm index",
+    "windows": "nodemon -r esm index",
     "client": "npm start --prefix client",
     "conc": "concurrently \"npm run dev\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-link-error": "^1.1.11",
+    "apollo-server": "^2.7.0",
     "apollo-server-express": "^2.7.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^4.1.1",
