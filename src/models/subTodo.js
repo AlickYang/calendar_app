@@ -14,10 +14,7 @@ const subTodoSchema = new Schema(
       type: Boolean,
       default: false
     },
-    hidden: {
-      type: Boolean,
-      default: false
-    }
+    createdAt: String
   },
   {
     timestamps: true

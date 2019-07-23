@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 /* Material UI */
 import { makeStyles } from "@material-ui/core/styles";
 import TodoItemTheme from "./TodoTheme";
@@ -26,7 +27,13 @@ const style = {
   padding: "5px 5px"
 };
 
-export default function TodoItem({ id, todo, subTodos, isComplete }) {
+export default function TodoItem({
+  id,
+  todo,
+  subTodos,
+  isComplete,
+  createdAt
+}) {
   const [open, setOpen] = useState(false);
 
   function handleClick() {
@@ -34,13 +41,16 @@ export default function TodoItem({ id, todo, subTodos, isComplete }) {
   }
 
   const classes = useStyles();
+
+  const time = moment(createdAt).fromNow(true);
+
   return (
     <List style={style}>
       <ListItem key={id} button onClick={handleClick}>
         <ListItemIcon>
           <Checkbox />
         </ListItemIcon>
-        <ListItemText primary={todo} />
+        <ListItemText primary={todo} secondary={time} />
         <ListItemSecondaryAction>
           <IconButton>
             <DeleteRounded />

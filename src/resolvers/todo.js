@@ -6,7 +6,6 @@ export default {
   Todo: {
     subTodos: async (todo, args, context, info) => {
       const ret = (await todo.populate("subTodos").execPopulate()).subTodos;
-      console.log(ret);
       return ret;
     }
   },
@@ -41,9 +40,18 @@ export default {
   },
 
   Mutation: {
-    addTodo: async (root, args, context, info) => {
-      const todo = await Todo.create(args);
-      return todo;
+    addTodo: async (root, { task }, context, info) => {
+      const todo = new Todo({
+        task,
+        createdAt: new Date().toISOString()
+      });
+      console.log(todo);
+      const resultOfSave = await todo.save();
+      if (resultOfSave) {
+        return todo;
+      } else {
+        throw new Error("Could not be saved");
+      }
     },
     removeTodo: async (root, { id }, context, info) => {
       try {

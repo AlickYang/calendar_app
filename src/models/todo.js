@@ -8,15 +8,13 @@ const userSchema = new Schema(
         ref: "SubTodo"
       }
     ],
-    // isComplete: Boolean,
-    // hidden: Boolean
     isComplete: {
       type: Boolean,
       default: false
     },
-    hidden: {
-      type: Boolean,
-      default: false
+    createdAt: {
+      type: String,
+      default: new Date().toISOString()
     }
   },
   {
