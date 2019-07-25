@@ -4,6 +4,7 @@ import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import TodoItemTheme from "./TodoTheme";
 import { MUTATION_REMOVE_TODO } from "./Todo-gql/Mutations";
+import { QUERY_GET_TODOS } from "./Todo-gql/Queries";
 import { useMutation } from "@apollo/react-hooks";
 //List related
 import List from "@material-ui/core/List";
@@ -44,9 +45,14 @@ export default function TodoItem({
   }
 
   const [removeTodo, { loading }] = useMutation(MUTATION_REMOVE_TODO, {
-    update(_, result) {
-      console.log(result);
-      console.log("Removing todo");
+    update(proxy, result) {
+      const cacheData = proxy.readQuery({
+        query: QUERY_GET_TODOS
+      });
+      cacheData.getTodos = cacheData.getTodos.filter(
+        todo => todo.id !== todoId
+      );
+      proxy.writeQuery({ query: QUERY_GET_TODOS, data: cacheData });
     },
     onError(err) {
       console.log(err);

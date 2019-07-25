@@ -5,7 +5,8 @@ const userSchema = new Schema(
     subTodos: [
       {
         type: Schema.Types.ObjectId,
-        ref: "SubTodo"
+        ref: "SubTodo",
+        default: []
       }
     ],
     isComplete: {

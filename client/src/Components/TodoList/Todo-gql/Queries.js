@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const QUERY_GET_TODOS = gql`
-  query {
+  {
     getTodos {
       id
       task

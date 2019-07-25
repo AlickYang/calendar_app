@@ -13,6 +13,7 @@
     "apollo-link-http": "^1.5.15",
     "graphql": "^14.4.2",
     "moment": "^2.24.0",
+    "office-ui-fabric-react": "^7.15.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",

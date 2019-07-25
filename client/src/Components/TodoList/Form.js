@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 /* GraphQL mutations */
 import { MUTATION_ADD_TODO } from "./Todo-gql/Mutations";
+import { QUERY_GET_TODOS } from "./Todo-gql/Queries";
 import { useMutation } from "@apollo/react-hooks";
 /* Material UI */
 import TextField from "@material-ui/core/TextField";
@@ -35,29 +36,35 @@ export default function Form() {
   };
 
   const [addTodo, { loading }] = useMutation(MUTATION_ADD_TODO, {
-    update(_, result) {
-      console.log(result);
-      console.log("Trying to add a todo");
+    variables: valueOfTextField,
+    update(proxy, result) {
+      const cacheData = proxy.readQuery({
+        query: QUERY_GET_TODOS
+      });
+      cacheData.getTodos = [result.data.addTodo, ...cacheData.getTodos];
+      proxy.writeQuery({ query: QUERY_GET_TODOS, data: cacheData });
+      valueOfTextField.task = "";
     },
     onError(err) {
       console.log(err);
       // setErrors(err.graphQLErrors[0].extensions.exception.errors);
       console.log(err.graphQLErrors);
-    },
-    variables: valueOfTextField
+    }
   });
 
   const onSubmit = event => {
     event.preventDefault();
     addTodo();
+    // setValueOfTextField({ [event.target.name]: "" });
   };
 
   return (
-    <form noValidate autoComplete="off">
+    <form noValidate autoComplete="off" onSubmit={onSubmit}>
       <FormControl fullwidth="true" className={classes.marginForInput}>
         <TextField
           onChange={handleOnChange}
           onSubmit={onSubmit}
+          value={valueOfTextField.task}
           name="task"
           id="standard-full-width"
           margin="normal"

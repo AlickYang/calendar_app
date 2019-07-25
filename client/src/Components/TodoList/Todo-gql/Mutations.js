@@ -7,6 +7,12 @@ export const MUTATION_ADD_TODO = gql`
       task
       isComplete
       createdAt
+      subTodos {
+        id
+        task
+        isComplete
+        createdAt
+      }
     }
   }
 `;

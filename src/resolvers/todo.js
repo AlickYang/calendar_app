@@ -47,7 +47,8 @@ export default {
       const newTodo = new Todo({
         task,
         isComplete: false,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        subTodos: []
       });
       console.log("Trying to make a new todo");
       console.log(newTodo);

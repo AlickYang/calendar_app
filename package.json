@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "NODE_ENV=production node -r esm index.js",
-    "dev": "node -r esm index",
-    "windows": "nodemon -r esm index",
+    "dev": "nodemon -r esm index",
+    "windows": "node -r esm index",
     "client": "npm start --prefix client",
     "conc": "concurrently \"npm run dev\" \"npm run client\""
   },
