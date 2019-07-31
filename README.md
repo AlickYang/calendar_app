@@ -1,10 +1,12 @@
-# 
-[x] GraphQL backend
+# Things to do
+
+- [x] GraphQL backend
   - [x] Create Mutations
   - [x] Read Queries
   - [x] Update Mutations
   - [x] Destroy Mutations
-[ ] React Frontend
+
+- [ ] React Frontend
   - [ ] Home Page
   - [ ] Todo List
     - [ ] Show todos
@@ -16,10 +18,13 @@
     - [ ] Show calendar 
     - [ ] Link dates from calendar to todo list
 
-## Features
-### MVP 
-- Todo list connected to each day within calendar
-- Responsive material design
+### Issues to fix:
+- [ ] Refactor form code
+- [ ] Error if server does not load before
+
+## How to run
+- Clone the repo
+  - 'npm run conc' to run server and client simultaneously
 
 ## Technologies
 #### Backend: 
