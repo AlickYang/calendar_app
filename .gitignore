@@ -84,5 +84,7 @@ typings/
 .dynamodb/
 
 # Config file
-config /
+config/
 keys.js
+
+config/keys.js
