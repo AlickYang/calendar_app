@@ -7,6 +7,8 @@ import TodoItem from "./TodoItem";
 import Loading from "./../Common/Loading";
 import { QUERY_GET_TODOS } from "./Todo-gql/Queries";
 
+import TodoProvider from "./../../Context/todoContext";
+
 export default function Todos() {
   // const classes = TodoListTheme;
   const {
@@ -24,7 +26,7 @@ export default function Todos() {
             <TodoItem
               key={todo.id}
               id={todo.id}
-              todo={todo.task}
+              task={todo.task}
               subTodos={todo.subTodos}
               isComplete={todo.isComplete}
               createdAt={todo.createdAt}

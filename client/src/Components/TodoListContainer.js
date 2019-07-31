@@ -1,8 +1,8 @@
 import React from "react";
 
 //Related Components
-import Todos from "./Todos";
-import Form from "./Form";
+import Todos from "./TodoList/Todos";
+import AddForm from "./TodoList/AddForm";
 
 //Grid layout
 import Paper from "@material-ui/core/Paper";
@@ -28,7 +28,7 @@ export default function TodoListContainer() {
       <Grid item sm={3} />
       <Grid item sm={6}>
         <Paper className={classes.paper}>
-          <Form />
+          <AddForm />
           <Todos />
         </Paper>
       </Grid>

@@ -6,9 +6,12 @@ import { useMutation } from "@apollo/react-hooks";
 /* Material UI */
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
+//Icons
 import AddIcon from "@material-ui/icons/Add";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import Edit from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -74,9 +77,11 @@ export default function Form() {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" onClick={onSubmit}>
-                <IconButton size="small">
-                  <AddIcon />
-                </IconButton>
+                <Tooltip title="Add todo!">
+                  <IconButton size="small">
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
               </InputAdornment>
             )
           }}

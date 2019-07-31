@@ -1,7 +1,8 @@
 import React from "react";
 //Components
-import TodoListContainer from "./Components/TodoList/TodoListContainer";
-
+import TodoListContainer from "./Components/TodoListContainer";
+//Routes
+import { BrowserRouter as Router, Route } from "react-router-dom";
 //Layouts
 import { Header, Background } from "./Components/Layouts";
 
@@ -11,10 +12,12 @@ import theme from "./Style/theme";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Header />
-      <TodoListContainer />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <Route exact path="/" component={TodoListContainer} />
+      </ThemeProvider>
+    </Router>
   );
 }
 

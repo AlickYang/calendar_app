@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import moment from "moment";
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 /* Material UI */
 import { makeStyles } from "@material-ui/core/styles";
-import TodoItemTheme from "./TodoTheme";
-import { MUTATION_REMOVE_TODO } from "./Todo-gql/Mutations";
-import { QUERY_GET_TODOS } from "./Todo-gql/Queries";
-import { useMutation } from "@apollo/react-hooks";
+
 //List related
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -13,16 +12,16 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import ExpandLess from "@material-ui/icons/ExpandLess";
 //Icons
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteRounded from "@material-ui/icons/DeleteRounded";
+import CheckBox from "@material-ui/core/CheckBox";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(4)
+  },
+  iconContainer: {
+    display: "flex"
   }
 }));
 
@@ -32,11 +31,12 @@ const style = {
 
 export default function TodoItem({
   id,
-  todo,
+  task,
   subTodos,
   isComplete,
   createdAt
 }) {
+  //State for whether item is nested
   const [open, setOpen] = useState(false);
   const todoId = id;
 
@@ -44,26 +44,9 @@ export default function TodoItem({
     setOpen(!open);
   }
 
-  const [removeTodo, { loading }] = useMutation(MUTATION_REMOVE_TODO, {
-    update(proxy, result) {
-      const cacheData = proxy.readQuery({
-        query: QUERY_GET_TODOS
-      });
-      cacheData.getTodos = cacheData.getTodos.filter(
-        todo => todo.id !== todoId
-      );
-      proxy.writeQuery({ query: QUERY_GET_TODOS, data: cacheData });
-    },
-    onError(err) {
-      console.log(err);
-      console.log(err.graphQLErrors);
-    },
-    variables: { id: todoId }
-  });
-
-  const onDeleteClick = event => {
+  const onEditClick = event => {
     event.preventDefault();
-    removeTodo();
+    //Create textfield
   };
 
   const classes = useStyles();
@@ -73,13 +56,13 @@ export default function TodoItem({
     <List style={style}>
       <ListItem key={id} button onClick={handleClick}>
         <ListItemIcon>
-          <Checkbox />
+          <CheckBox />
         </ListItemIcon>
-        <ListItemText primary={todo} secondary={time} />
-        <ListItemSecondaryAction>
-          <IconButton onClick={onDeleteClick}>
-            <DeleteRounded />
-          </IconButton>
+        <ListItemText primary={task} secondary={time} />
+        <ListItemSecondaryAction className={classes.iconContainer}>
+          <EditButton todoId={id} task={task} />
+          <Divider className={classes.divider} />
+          <DeleteButton todoId={id} />
         </ListItemSecondaryAction>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -87,7 +70,7 @@ export default function TodoItem({
           <List key={subTodo.id} component="div" disablePadding>
             <ListItem button className={classes.nested}>
               <ListItemIcon>
-                <Checkbox />
+                <CheckBox />
               </ListItemIcon>
               <ListItemText primary={subTodo.task} />
             </ListItem>
