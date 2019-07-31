@@ -1,39 +1,33 @@
-# Calender with Todo List
-Built on MERN stack with GraphQL, based off code_realm
+# 
+[x] GraphQL backend
+  - [x] Create Mutations
+  - [x] Read Queries
+  - [x] Update Mutations
+  - [x] Destroy Mutations
+[ ] React Frontend
+  - [ ] Home Page
+  - [ ] Todo List
+    - [ ] Show todos
+      - [ ] Show subtodos
+    - [ ] Add Form to add todos
+    - [ ] Delete todos from the list
+    - [ ] Update todos
+  - [ ] Calendar
+    - [ ] Show calendar 
+    - [ ] Link dates from calendar to todo list
 
 ## Features
 ### MVP 
 - Todo list connected to each day within calendar
 - Responsive material design
 
-### Extra Features
-- Notifications
-- Themes and customisation
-- Other
-
-### Topics:
-- Schema Design
-- User validation
-- Authentication (session vs token)
-- Authorisation (access control)
-- Security (injections, XSS, CSRF, headers)
-- State management
-- File upload
-- Real-time updates
-- Performance optimsation
-- Pagination
-
-### Technologies
+## Technologies
 #### Backend: 
 - Node + Express
 - MongoDB + Mongoose ORM
 - Apollo Server v2
-- Web sockets
-- Redis
+
 #### Front-End
 - React 
 - Apollo Client
 - Material-UI
-- Bootstrap + Reactstrap
-
-## RoadMap
