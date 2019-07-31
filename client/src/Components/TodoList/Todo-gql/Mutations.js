@@ -17,6 +17,7 @@ export const MUTATION_ADD_TODO = gql`
   }
 `;
 
+<<<<<<< HEAD
 export const MUTATION_EDIT_TODO = gql`
   mutation updateTodoTask($id: ID!, $newTask: String!) {
     updateTodoTask(id: $id, newTask: $newTask) {
@@ -34,6 +35,8 @@ export const MUTATION_EDIT_TODO = gql`
   }
 `;
 
+=======
+>>>>>>> f4290b3e2fc8f65cdd113663cca8168ec0fe10ea
 export const MUTATION_REMOVE_TODO = gql`
   mutation removeTodo($id: ID!) {
     removeTodo(id: $id)
