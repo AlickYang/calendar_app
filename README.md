@@ -24,7 +24,11 @@
 
 ## How to run
 - Clone the repo
-  - 'npm run conc' to run server and client simultaneously
+  - 'npm run conc' to run server and client simultaneously (will not work at the moment as keys are hidden)
+  
+## How it currently looks
+![](https://i.imgur.com/up3Bm53.png)
+
 
 ## Technologies
 #### Backend: 
