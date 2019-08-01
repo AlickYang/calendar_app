@@ -24,7 +24,7 @@ export default function Form() {
   const [valueOfTextField, setValueOfTextField] = useState({
     task: ""
   });
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
   const classes = useStyles();
 
   const handleOnChange = event => {

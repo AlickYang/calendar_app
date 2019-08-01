@@ -18,7 +18,6 @@ const quoteText = {
   fontFamily: "Helvetica Neue",
   fontSize: "1.5vw",
   color: "white",
-  fontSize: "2vw",
   letterSpacing: "1px",
   lineHeight: "1",
   margin: "0"
