@@ -8,12 +8,14 @@
 
 - [ ] React Frontend
   - [ ] Home Page
-  - [ ] Todo List
+  - [x] Todo List
     - [ ] Show todos
-      - [ ] Show subtodos
-    - [ ] Add Form to add todos
-    - [ ] Delete todos from the list
+      - [x] Show subtodos
+    - [x] Add Form to add todos
+    - [x] Delete todos from the list
     - [ ] Update todos
+    - [ ] Have checkbox for todos working
+    - [ ] Same functionality for subtodos
   - [ ] Calendar
     - [ ] Show calendar 
     - [ ] Link dates from calendar to todo list
